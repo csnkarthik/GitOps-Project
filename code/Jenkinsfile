@@ -1,4 +1,4 @@
-@Library('devops-projects-shared-lib') _
+//@Library('devops-projects-shared-lib') _
 
 pipeline{
     agent {
@@ -19,10 +19,11 @@ pipeline{
     stages{
         stage('checkout'){            
             script{
-                def repo_url = 'https://github.com/csnkarthik/GitOps-Project.git'
-                def ref = 'master'
-                def path = '/code'
-                sh("git archive --remote=${repo_url} ${ref} ${path} | tar x")
+                // def repo_url = 'https://github.com/csnkarthik/GitOps-Project.git'
+                // def ref = 'main'
+                // def path = '/code'
+                // sh("git archive --remote=${repo_url} ${ref} ${path} | tar x")
+                echo 'works!!!'
             }
         }
     }
