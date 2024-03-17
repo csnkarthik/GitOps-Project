@@ -17,14 +17,21 @@ pipeline{
     }
 
     stages{
-        stage('checkout'){            
-            script{
-                // def repo_url = 'https://github.com/csnkarthik/GitOps-Project.git'
-                // def ref = 'main'
-                // def path = '/code'
-                // sh("git archive --remote=${repo_url} ${ref} ${path} | tar x")
-                echo 'works!!!'
-            }
+        stage('checkout'){  
+            when { expression { params.action == 'create' } }
+            steps
+            {
+                script
+                {
+                    // def repo_url = 'https://github.com/csnkarthik/GitOps-Project.git'
+                    // def ref = 'main'
+                    // def path = '/code'
+                    // sh("git archive --remote=${repo_url} ${ref} ${path} | tar x")
+                    echo 'works!!!'
+                }
+
+            }    
+            
         }
     }
 }
