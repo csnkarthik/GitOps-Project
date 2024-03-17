@@ -1,4 +1,4 @@
-//@Library('devops-projects-shared-lib') _
+@Library('devops-projects-shared-lib') _
 
 pipeline{
     agent {
