@@ -23,6 +23,7 @@ pipeline{
             {
                 script
                 {
+                    sh pwd
                     dockerBuild("${params.ImageName}", "${params.ImageTag}", "${params.dockerHubUser}");
                 }
 
