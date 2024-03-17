@@ -1,0 +1,29 @@
+@Library('devops-projects-shared-lib') _
+
+pipeline{
+    agent {
+        label 'docker'
+    }
+
+    parameters {
+        choice choices: ['create', 'delete'], description: 'Choose create or Delete', name: 'action'
+        string defaultValue: 'gitops-demo', description: 'Name of the Image', name: 'ImageName'
+        string defaultValue: 'v1', description: 'Tag of the Image', name: 'ImageTag'
+        string defaultValue: 'csnkarthik', description: 'Name of the App', name: 'dockerHubUser'
+    }
+    
+    environment {
+        DOCKER_CREDENTIALS = credentials('docker_credentials')
+    }
+
+    stages{
+        stage('checkout'){            
+            script{
+                def repo_url = 'https://github.com/csnkarthik/GitOps-Project.git'
+                def ref = 'master'
+                def path = '/code'
+                sh("git archive --remote=${repo_url} ${ref} ${path} | tar x")
+            }
+        }
+    }
+}
