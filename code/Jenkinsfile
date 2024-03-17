@@ -17,17 +17,13 @@ pipeline{
     }
 
     stages{
-        stage('checkout'){  
+        stage('build docker image'){  
             when { expression { params.action == 'create' } }
             steps
             {
                 script
                 {
-                    // def repo_url = 'https://github.com/csnkarthik/GitOps-Project.git'
-                    // def ref = 'main'
-                    // def path = '/code'
-                    // sh("git archive --remote=${repo_url} ${ref} ${path} | tar x")
-                    echo 'works!!!'
+                    dockerBuild("${params.ImageName}", "${params.ImageTag}", "${params.dockerHubUser}");
                 }
 
             }    
