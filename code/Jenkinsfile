@@ -17,18 +17,28 @@ pipeline{
     }
 
     stages{
-        stage('build docker image'){  
+        stage('checkout'){  
             when { expression { params.action == 'create' } }
             steps
             {
                 script
                 {
                     sh pwd
-                    dockerBuild("${params.ImageName}", "${params.ImageTag}", "${params.dockerHubUser}");
+                    //dockerBuild("${params.ImageName}", "${params.ImageTag}", "${params.dockerHubUser}");
                 }
-
-            }    
-            
+            }            
         }
+
+        // stage('build docker image'){  
+        //     when { expression { params.action == 'create' } }
+        //     steps
+        //     {
+        //         script
+        //         {
+        //             sh pwd
+        //             dockerBuild("${params.ImageName}", "${params.ImageTag}", "${params.dockerHubUser}");
+        //         }
+        //     }            
+        // }
     }
 }
