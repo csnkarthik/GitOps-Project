@@ -34,6 +34,7 @@ pipeline{
                 script
                 {
                     echo 'build block works'
+                    echo pwd
                     //dockerBuild("${params.ImageName}", "${params.ImageTag}", "${params.dockerHubUser}");
                 }
             }            
