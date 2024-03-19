@@ -17,7 +17,17 @@ pipeline{
     }
 
     stages{
-        stage('checkout'){  
+        stage('Git Checkout'){            
+            when { expression { params.action == 'create' } }
+            steps {                
+                gitCheckout(
+                    branch: 'main',
+                    url: 'https://github.com/csnkarthik/devops-project-1.git'
+                )
+            }
+        }
+
+        stage('build docker image'){  
             when { expression { params.action == 'create' } }
             steps
             {
@@ -28,17 +38,5 @@ pipeline{
                 }
             }            
         }
-
-        // stage('build docker image'){  
-        //     when { expression { params.action == 'create' } }
-        //     steps
-        //     {
-        //         script
-        //         {
-        //             sh pwd
-        //             dockerBuild("${params.ImageName}", "${params.ImageTag}", "${params.dockerHubUser}");
-        //         }
-        //     }            
-        // }
     }
 }
