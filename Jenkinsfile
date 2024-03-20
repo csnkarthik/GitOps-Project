@@ -37,11 +37,19 @@ pipeline{
             when { expression { params.action == 'create' } }
             steps
             {
+                dockerBuild("${params.ImageName}", "${params.ImageTag}", "${params.dockerHubUser}");
+            }            
+        }
+
+        stage('push image'){  
+            when { expression { params.action == 'create' } }
+            steps
+            {
                 script
                 {
                     echo 'build block works'
                     echo pwd
-                    dockerBuild("${params.ImageName}", "${params.ImageTag}", "${params.dockerHubUser}");
+                    dockerImagePush("${params.ImageName}", "${params.ImageTag}", "${params.dockerHubUser}");
                 }
             }            
         }
