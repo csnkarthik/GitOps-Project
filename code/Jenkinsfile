@@ -21,10 +21,15 @@ pipeline{
         stage('Git Checkout'){            
             when { expression { params.action == 'create' } }
             steps {                
-                gitCheckout(
-                    branch: 'main',
-                    url: 'https://github.com/csnkarthik/GitOps-Project.git'
-                )
+                // gitCheckout(
+                //     branch: 'main',
+                //     url: 'https://github.com/csnkarthik/GitOps-Project.git'
+                // )
+                checkout([$class: 'GitSCM', 
+                          branches: [[name: '*/main']], 
+                          doGenerateSubmoduleConfigurations: false,
+                          extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'code']], 
+                          submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/csnkarthik/GitOps-Project.git']]]) 
             }
         }
 
