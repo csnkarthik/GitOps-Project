@@ -17,6 +17,7 @@ pipeline{
     }
 
     stages{
+
         stage('Git Checkout'){            
             when { expression { params.action == 'create' } }
             steps {                
@@ -35,7 +36,7 @@ pipeline{
                 {
                     echo 'build block works'
                     echo pwd
-                    //dockerBuild("${params.ImageName}", "${params.ImageTag}", "${params.dockerHubUser}");
+                    dockerBuild("${params.ImageName}", "${params.ImageTag}", "${params.dockerHubUser}");
                 }
             }            
         }
