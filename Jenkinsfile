@@ -45,8 +45,8 @@ pipeline{
             steps
             {
                script{
-                    //cd manifest
-                    sed -i "s/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g" manifest/test-login-app/values.yaml
+                    cd manifest
+                    sed -i "s/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g" test-login-app/values.yaml
                }
             }            
         }       
