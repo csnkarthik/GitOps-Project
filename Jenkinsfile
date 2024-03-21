@@ -44,9 +44,11 @@ pipeline{
             when { expression { params.action == 'create' } }
             steps
             {
-               script{
-                    cd manifest
-                    sed -i "s/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g" test-login-app/values.yaml
+               script{                    
+                    sh """
+                        cd manifest 
+                        sed -i 's/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g' test-login-app/values.yaml
+                    """
                }
             }            
         }       
