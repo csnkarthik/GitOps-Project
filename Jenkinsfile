@@ -36,7 +36,6 @@ pipeline{
                 // build
                 dockerBuild("${params.ImageName}", "${BUILD_NUMBER}", "${params.dockerHubUser}");
 
-                push
                 dockerImagePush("${params.ImageName}", "${BUILD_NUMBER}", "${params.dockerHubUser}");
             }            
         }        
