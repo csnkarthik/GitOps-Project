@@ -7,9 +7,9 @@ pipeline{
 
     parameters {
         choice choices: ['create', 'delete'], description: 'Choose create or Delete', name: 'action'
-        string defaultValue: 'gitops-demo', description: 'Name of the Image', name: 'ImageName'
+        //string defaultValue: 'gitops-demo', description: 'Name of the Image', name: 'ImageName'
         //string defaultValue: 'v1', description: 'Tag of the Image', name: 'ImageTag'
-        string defaultValue: 'csnkarthik', description: 'Name of the App', name: 'dockerHubUser'
+        //string defaultValue: 'csnkarthik', description: 'Name of the App', name: 'dockerHubUser'
     }
     
     environment {
@@ -34,10 +34,21 @@ pipeline{
             steps
             {
                 // build
-                dockerBuild("${params.ImageName}", "${BUILD_NUMBER}", "${params.dockerHubUser}");
+                dockerBuild("gitops-demo", "${BUILD_NUMBER}", "csnkarthik");
 
-                dockerImagePush("${params.ImageName}", "${BUILD_NUMBER}", "${params.dockerHubUser}");
+                dockerImagePush("gitops-demo", "${BUILD_NUMBER}", "csnkarthik");
             }            
-        }        
+        }    
+
+        stage('update manifest'){  
+            when { expression { params.action == 'create' } }
+            steps
+            {
+               script{
+                    //cd manifest
+                    sed -i "s/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g" manifest/test-login-app/values.yaml
+               }
+            }            
+        }       
     }
 }
