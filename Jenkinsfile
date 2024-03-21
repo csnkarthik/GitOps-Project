@@ -46,8 +46,12 @@ pipeline{
             {
                script{                    
                     sh """
-                        cd manifest 
-                        sed -i 's/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g' test-login-app/values.yaml
+                        
+                        sed -i 's/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g' manifest/test-login-app/values.yaml
+
+                        git add .
+                        git commit -m 'updated values.yaml'
+                        git push
                     """
                }
             }            
