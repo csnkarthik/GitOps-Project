@@ -8,7 +8,7 @@ pipeline{
     parameters {
         choice choices: ['create', 'delete'], description: 'Choose create or Delete', name: 'action'
         string defaultValue: 'gitops-demo', description: 'Name of the Image', name: 'ImageName'
-        string defaultValue: 'v1', description: 'Tag of the Image', name: 'ImageTag'
+        //string defaultValue: 'v1', description: 'Tag of the Image', name: 'ImageTag'
         string defaultValue: 'csnkarthik', description: 'Name of the App', name: 'dockerHubUser'
     }
     
@@ -21,10 +21,6 @@ pipeline{
         stage('Git Checkout'){            
             when { expression { params.action == 'create' } }
             steps {                
-                // gitCheckout(
-                //     branch: 'main',
-                //     url: 'https://github.com/csnkarthik/GitOps-Project.git'
-                // )
                 checkout([$class: 'GitSCM', 
                           branches: [[name: '*/main']], 
                           doGenerateSubmoduleConfigurations: false,
@@ -38,10 +34,10 @@ pipeline{
             steps
             {
                 // build
-                dockerBuild("${params.ImageName}", "${params.ImageTag}", "${params.dockerHubUser}");
+                dockerBuild("${params.ImageName}", "${BUILD_NUMBER}", "${params.dockerHubUser}");
 
                 push
-                dockerImagePush("${params.ImageName}", "${params.ImageTag}", "${params.dockerHubUser}");
+                dockerImagePush("${params.ImageName}", "${BUILD_NUMBER}", "${params.dockerHubUser}");
             }            
         }        
     }
