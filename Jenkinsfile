@@ -46,14 +46,17 @@ pipeline{
             {
                script{                    
                     sh """
-                        
-                        sed -i 's/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g' manifest/test-login-app/values.yaml
-
-                        
+                        git config --global user.email 'karthik.aspx.cs@gmail.com'
+                        git config --global user.name 'csnkarthik'
+                        git clone https://github.com/csnkarthik/GitOps-Demo-Manifest.git
+                        cd GitOps-Demo-Manifest
+                        sed -i 's/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g' values.yaml
+                        git add .
+                        git commit -m 'Updated Image Tag: ${BUILD_NUMBER}'
+                        git push
                     """
-                    
                }
-               gitPush();
+              
             }            
         }       
     }
