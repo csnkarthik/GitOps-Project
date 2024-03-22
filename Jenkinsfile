@@ -48,7 +48,7 @@ pipeline{
                     sh """
                         git config --global user.email karthik.aspx.cs@gmail.com
                         git config --global user.name csnkarthik
-                        git -C repo pull || git clone https://github.com/csnkarthik/GitOps-Demo-Manifest.git                        
+                        git -C GitOps-Demo-Manifest pull || git clone https://github.com/csnkarthik/GitOps-Demo-Manifest.git                        
                         cd GitOps-Demo-Manifest
                         sed -i 's/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g' values.yaml
                         git add .
