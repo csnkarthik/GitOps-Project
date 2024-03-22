@@ -53,7 +53,7 @@ pipeline{
                         sed -i 's/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g' values.yaml
                         git add .
                         git commit -m 'Updated Image Tag: ${BUILD_NUMBER}'
-                        git push
+                        git push origin
                     """
                }
               
