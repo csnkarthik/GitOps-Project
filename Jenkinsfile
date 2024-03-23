@@ -69,8 +69,8 @@ pipeline{
 
                                 git push git@github.com:csnkarthik/GitOps-Demo-Manifest.git
             
-                            }     
-                            cd GitOps-Demo-Manifest
+                            }    
+                            
                         """
                     }
                }
