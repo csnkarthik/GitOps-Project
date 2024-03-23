@@ -63,10 +63,7 @@ pipeline{
                                 git add .
                                 git commit -m 'Updated Image Tag: ${BUILD_NUMBER}'   
                                 
-                                set +x
-                                eval \$(ssh-agent -s)
-                                ssh-add <(echo '\$SSH_PRIVATE_KEY')
-
+                                
                                 git push git@github.com:csnkarthik/GitOps-Demo-Manifest.git
             
                             }    
