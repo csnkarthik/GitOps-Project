@@ -23,31 +23,24 @@ pipeline{
         stage('Git Checkout'){            
             when { expression { params.action == 'create' } }
             steps {                
-                echo GIT_CREDENTIALS;
+                checkout([$class: 'GitSCM', 
+                          branches: [[name: '*/main']], 
+                          doGenerateSubmoduleConfigurations: false,
+                          extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'code']], 
+                          submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/csnkarthik/GitOps-Project.git']]]) 
             }
         }
 
-        // stage('Git Checkout'){            
-        //     when { expression { params.action == 'create' } }
-        //     steps {                
-        //         checkout([$class: 'GitSCM', 
-        //                   branches: [[name: '*/main']], 
-        //                   doGenerateSubmoduleConfigurations: false,
-        //                   extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'code']], 
-        //                   submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/csnkarthik/GitOps-Project.git']]]) 
-        //     }
-        // }
+        stage('build and push'){  
+            when { expression { params.action == 'create' } }
+            steps
+            {
+                // build
+                dockerBuild("gitops-demo", "${BUILD_NUMBER}", "csnkarthik");
 
-        // stage('build and push'){  
-        //     when { expression { params.action == 'create' } }
-        //     steps
-        //     {
-        //         // build
-        //         dockerBuild("gitops-demo", "${BUILD_NUMBER}", "csnkarthik");
-
-        //         dockerImagePush("gitops-demo", "${BUILD_NUMBER}", "csnkarthik");
-        //     }            
-        // }    
+                dockerImagePush("gitops-demo", "${BUILD_NUMBER}", "csnkarthik");
+            }            
+        }    
 
         stage('update manifest'){  
             when { expression { params.action == 'create' } }
