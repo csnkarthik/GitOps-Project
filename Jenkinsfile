@@ -57,7 +57,7 @@ pipeline{
 
                             git -C GitOps-Demo-Manifest pull || git clone https://github.com/csnkarthik/GitOps-Demo-Manifest.git  
 
-                            dic('GitOps-Demo-Manifest'){
+                            dir('GitOps-Demo-Manifest'){
                                 sed -i 's/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g' values.yaml
                             
                                 git add .
