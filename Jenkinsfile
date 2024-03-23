@@ -52,10 +52,10 @@ pipeline{
                             git -C GitOps-Demo-Manifest pull || git clone https://github.com/csnkarthik/GitOps-Demo-Manifest.git                        
                             cd GitOps-Demo-Manifest
                             sed -i 's/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g' values.yaml
-
+                            
+                            ssh -oStrictHostKeyChecking=no host
                             git add .
                             git commit -m 'Updated Image Tag: ${BUILD_NUMBER}'
-                            
                             git remote set-url origin git@github.com:csnkarthik/GitOps-Demo-Manifest.git                            
                             git push
                         """
