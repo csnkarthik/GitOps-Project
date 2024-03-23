@@ -52,15 +52,25 @@ pipeline{
                         sh """
                             git config --global user.email karthik.aspx.cs@gmail.com
                             git config --global user.name csnkarthik
-                            ssh -oStrictHostKeyChecking=no csnkarthik@github.com
 
-                            git -C GitOps-Demo-Manifest pull || git clone origin git@github.com:csnkarthik/GitOps-Demo-Manifest.git       
-                            cd GitOps-Demo-Manifest
-                            sed -i 's/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g' values.yaml
+                            #ssh -oStrictHostKeyChecking=no git@github.com
+
+                            git -C GitOps-Demo-Manifest pull || git clone https://github.com/csnkarthik/GitOps-Demo-Manifest.git  
+
+                            dic('GitOps-Demo-Manifest'){
+                                sed -i 's/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g' values.yaml
                             
-                            git add .
-                            git commit -m 'Updated Image Tag: ${BUILD_NUMBER}'                                                   
-                            git push
+                                git add .
+                                git commit -m 'Updated Image Tag: ${BUILD_NUMBER}'   
+                                
+                                set +x
+                                eval \$(ssh-agent -s)
+                                ssh-add <(echo '\$SSH_PRIVATE_KEY')
+
+                                git push git@github.com:csnkarthik/GitOps-Demo-Manifest.git
+            
+                            }     
+                            cd GitOps-Demo-Manifest
                         """
                     }
                }
