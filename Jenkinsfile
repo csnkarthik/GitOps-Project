@@ -54,7 +54,7 @@ pipeline{
                             git config --global user.name csnkarthik
                             ssh -oStrictHostKeyChecking=no csnkarthik@github.com
 
-                            git -C GitOps-Demo-Manifest pull || git clone https://github.com/csnkarthik/GitOps-Demo-Manifest.git       
+                            git -C GitOps-Demo-Manifest pull || git clone origin git@github.com:csnkarthik/GitOps-Demo-Manifest.git       
                             cd GitOps-Demo-Manifest
                             sed -i 's/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g' values.yaml
                             
