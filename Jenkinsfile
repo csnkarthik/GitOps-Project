@@ -58,10 +58,10 @@ pipeline{
 
                         
                         dir('GitOps-Demo-Manifest'){
-                            sed -i "s/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g" values.yaml
+                            sed -i 's/gitops-demo:.*/gitops-demo:$BUILD_NUMBER/g' values.yaml
                         
                             git add .
-                            git commit -m "Updated Image Tag: ${BUILD_NUMBER}"   
+                            git commit -m 'Updated Image Tag: $BUILD_NUMBER'   
                             
                             
                             git push git@github.com:csnkarthik/GitOps-Demo-Manifest.git
