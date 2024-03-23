@@ -49,32 +49,29 @@ pipeline{
         //     }            
         // }    
 
-        // stage('update manifest'){  
-        //     when { expression { params.action == 'create' } }
-        //     steps
-        //     {
-        //        sshagent(['GitOps-Demo-Manifest']) {
-        //            script{    
+        stage('update manifest'){  
+            when { expression { params.action == 'create' } }
+            steps
+            {
+               sshagent(['GitOps-Demo-Manifest']) {
+                   script{
 
-                        
-        //                 // sh """
-        //                 //     git config --global user.email karthik.aspx.cs@gmail.com
-        //                 //     git config --global user.name csnkarthik
-        //                 //     ssh -oStrictHostKeyChecking=no csnkarthik@github.com
+                        sh """
+                            git config --global user.email karthik.aspx.cs@gmail.com
+                            git config --global user.name csnkarthik
+                            ssh -oStrictHostKeyChecking=no csnkarthik@github.com
 
-        //                 //     git -C GitOps-Demo-Manifest pull || git clone https://github.com/csnkarthik/GitOps-Demo-Manifest.git                        
-        //                 //     cd GitOps-Demo-Manifest
-        //                 //     sed -i 's/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g' values.yaml
+                            git -C GitOps-Demo-Manifest pull || git clone https://github.com/csnkarthik/GitOps-Demo-Manifest.git       
+                            cd GitOps-Demo-Manifest
+                            sed -i 's/gitops-demo:.*/gitops-demo:${BUILD_NUMBER}/g' values.yaml
                             
-                            
-        //                 //     git add .
-        //                 //     git commit -m 'Updated Image Tag: ${BUILD_NUMBER}'
-        //                 //     git remote set-url origin git@github.com:csnkarthik/GitOps-Demo-Manifest.git                            
-        //                 //     git push
-        //                 // """
-        //             }
-        //        }
-        //     }            
-        // }       
+                            git add .
+                            git commit -m 'Updated Image Tag: ${BUILD_NUMBER}'                                                   
+                            git push
+                        """
+                    }
+               }
+            }            
+        }       
     }
 }
